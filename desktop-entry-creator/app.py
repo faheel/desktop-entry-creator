@@ -121,6 +121,10 @@ class App:
                 text='Fill all required entries before saving.')
 
 
-if __name__ == '__main__':
-    app = App()
+def main():
+    App()
     Gtk.main()
+
+
+if __name__ == '__main__':
+    main()
