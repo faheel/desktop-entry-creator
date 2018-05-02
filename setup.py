@@ -9,10 +9,11 @@ with open('README.md', encoding='utf-8') as f:
 
 setup(
     name='desktop-entry-creator',
-    version='0.1.0',
+    version='0.1.2',
     description='A user-friendly GUI for creating desktop entries for '
                 'installed applications on Linux.',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/faheel/desktop-entry-creator',
     author='Faheel Ahmad',
     author_email='faheel@live.in',
