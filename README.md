@@ -3,6 +3,8 @@
 </p>
 <h1 align="center">Desktop entry creator</h1>
 
+[![PyPI][pypi-version-shield]][pypi-link]
+[![PyPI - Python Version][python-version-shield]][pypi-link]
 [![License][license-shield]](LICENSE)
 
 A user-friendly GUI for creating desktop entries for installed applications on Linux.
@@ -41,4 +43,7 @@ A user-friendly GUI for creating desktop entries for installed applications on L
 This project is licensed under the terms of the [GPL v3 license](LICENSE).
 
 
+[pypi-version-shield]: https://img.shields.io/pypi/v/desktop-entry-creator.svg?style=for-the-badge
+[python-version-shield]: https://img.shields.io/pypi/pyversions/desktop-entry-creator.svg?style=for-the-badge
+[pypi-link]: https://pypi.org/project/desktop-entry-creator
 [license-shield]: https://img.shields.io/github/license/faheel/desktop-entry-creator.svg?style=for-the-badge
