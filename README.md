@@ -18,6 +18,10 @@ A user-friendly GUI for creating desktop entries for installed applications on L
      ```bash
      sudo dnf install python3-devel cairo cairo-devel python3-cairo gobject-introspection gobject-introspection-devel cairo-gobject cairo-gobject-devel
      ```
+   * Ubuntu and Debian based distros
+     ```bash
+     sudo apt install python3-dev libcairo2 libcairo-dev python3-cairo libgirepository-1.0-1 libgirepository1.0-dev libcairo-gobject2
+     ```
 2. Setup Python 3 virtual environment using Pipenv:
    ```bash
    pipenv --three
