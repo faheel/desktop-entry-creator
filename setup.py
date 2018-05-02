@@ -1,11 +1,11 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 from codecs import open
-from os import path
 
 
 # Get the long description from README.md
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
+
 
 setup(
     name='desktop-entry-creator',
@@ -33,14 +33,17 @@ setup(
         'Intended Audience :: End Users/Desktop',
     ],
     keywords='gui linux desktop-entry desktop-entry-creator pygobject gtk',
-    packages=find_packages(),
+    packages=['desktop_entry_creator'],
+    package_data={
+        'desktop_entry_creator': ['res/*'],
+    },
     install_requires=['pygobject', 'python-slugify'],
     extras_require={
         'dev': ['pylint'],
     },
     entry_points={
         'gui_scripts': [
-            'desktop-entry-creator=desktop-entry-creator.app:main',
+            'desktop-entry-creator=desktop_entry_creator.app:main',
         ],
     },
     project_urls={
