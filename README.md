@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="desktop_entry_creator/res/icon.png" alt="Logo" width="128" height="128">
+  <img src="https://raw.githubusercontent.com/faheel/desktop-entry-creator/master/desktop_entry_creator/res/icon.png" alt="Logo" width="128" height="128">
 </p>
 <h1 align="center">Desktop entry creator</h1>
 
@@ -8,7 +8,7 @@
 A user-friendly GUI for creating desktop entries for installed applications on Linux.
 
 <p align="center">
-  <img src="screenshot.png" alt="Screenshot">
+  <img src="https://raw.githubusercontent.com/faheel/desktop-entry-creator/master/screenshot.png" alt="Screenshot">
 </p>
 
 ## Development
