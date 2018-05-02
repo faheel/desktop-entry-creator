@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="desktop-entry-creator/res/icon.png" alt="Logo" width="128" height="128">
+  <img src="desktop_entry_creator/res/icon.png" alt="Logo" width="128" height="128">
 </p>
 <h1 align="center">Desktop entry creator</h1>
 
@@ -31,9 +31,9 @@ A user-friendly GUI for creating desktop entries for installed applications on L
    pipenv shell
    pipenv install --dev
    ```
-4. Run `app.py` located under the `desktop-entry-creator` directory to launch the GUI:
+4. Run `app.py` located under the `desktop_entry_creator` directory to launch the GUI:
    ```bash
-   ./desktop-entry-creator/app.py
+   ./desktop_entry_creator/app.py
    ```
 
 ## License

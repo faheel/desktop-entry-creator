@@ -15,7 +15,7 @@ DESKTOP_ENTRY_DIR = expanduser('~/.local/share/applications')
 def absolute_path(relative_path):
     return dirname(__file__) + '/' + relative_path
 
-UI_GLADE_FILE = absolute_path('ui.glade')
+UI_GLADE_FILE = absolute_path('res/ui.glade')
 
 
 def is_blank_string(string):
