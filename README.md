@@ -1,11 +1,15 @@
 <p align="center">
-  <img src="app/res/icon.png" width="128" height="128">
+  <img src="app/res/icon.png" alt="Logo" width="128" height="128">
 </p>
 <h1 align="center">Desktop entry creator</h1>
 
 [![License][license-shield]](LICENSE)
 
 A user-friendly GUI for creating desktop entries for installed applications on Linux.
+
+<p align="center">
+  <img src="screenshot.png" alt="Screenshot">
+</p>
 
 ## Development
 
@@ -22,6 +26,10 @@ A user-friendly GUI for creating desktop entries for installed applications on L
    ```bash
    pipenv shell
    pipenv install --dev
+   ```
+4. Run `app.py` located under the `app` directory to launch the GUI:
+   ```bash
+   ./app/app.py
    ```
 
 ## License
