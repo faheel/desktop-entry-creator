@@ -4,7 +4,6 @@
 <h1 align="center">Desktop entry creator</h1>
 
 [![PyPI][pypi-version-shield]][pypi-link]
-[![PyPI - Python Version][python-version-shield]][pypi-link]
 [![License][license-shield]](LICENSE)
 
 A user-friendly GUI for creating desktop entries for installed applications on Linux.
@@ -13,7 +12,7 @@ A user-friendly GUI for creating desktop entries for installed applications on L
   <img src="https://raw.githubusercontent.com/faheel/desktop-entry-creator/master/screenshot.png" alt="Screenshot">
 </p>
 
-## Development
+## Installation
 
 1. Install the required system packages:
    * Fedora and RHEL based distros:
@@ -24,6 +23,15 @@ A user-friendly GUI for creating desktop entries for installed applications on L
      ```bash
      sudo apt install python3-dev libcairo2 libcairo-dev python3-cairo libgirepository-1.0-1 libgirepository1.0-dev libcairo-gobject2
      ```
+
+2. Install using pip:
+   ```bash
+   pip install desktop-entry-creator
+   ```
+
+## Development
+
+1. Install the required system packages mentioned in the installation section.
 2. Setup Python 3 virtual environment using Pipenv:
    ```bash
    pipenv --three
@@ -44,6 +52,5 @@ This project is licensed under the terms of the [GPL v3 license](LICENSE).
 
 
 [pypi-version-shield]: https://img.shields.io/pypi/v/desktop-entry-creator.svg?style=for-the-badge
-[python-version-shield]: https://img.shields.io/pypi/pyversions/desktop-entry-creator.svg?style=for-the-badge
 [pypi-link]: https://pypi.org/project/desktop-entry-creator
 [license-shield]: https://img.shields.io/github/license/faheel/desktop-entry-creator.svg?style=for-the-badge
