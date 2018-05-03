@@ -1,7 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.20.4 -->
 <interface>
-  <requires lib="gtk+" version="3.6"/>
+  <requires lib="gtk+" version="3.12"/>
+  <object class="GtkMenu" id="Menu">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkMenuItem">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Create self desktop entry</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="create_self_desktop_entry" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkCheckMenuItem" id="DarkThemeCheckbox">
+        <property name="name">DarkThemeCheckbox</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Use dark theme</property>
+        <property name="use_underline">True</property>
+        <signal name="toggled" handler="toggle_dark_theme" swapped="no"/>
+      </object>
+    </child>
+  </object>
   <object class="GtkWindow" id="MainWindow">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Create desktop entry</property>
@@ -245,14 +274,12 @@
         </child>
         <child>
           <object class="GtkButton" id="Save">
-            <property name="label">gtk-save</property>
+            <property name="label">Save</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="halign">end</property>
             <property name="valign">end</property>
-            <property name="use_stock">True</property>
-            <property name="always_show_image">True</property>
             <signal name="clicked" handler="on_click_save" swapped="no"/>
           </object>
           <packing>
@@ -264,7 +291,29 @@
       </object>
     </child>
     <child type="titlebar">
-      <placeholder/>
+      <object class="GtkHeaderBar">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="title">Desktop Entry Creator</property>
+        <property name="subtitle">Create desktop entry</property>
+        <property name="show_close_button">True</property>
+        <child>
+          <object class="GtkMenuButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="popup">Menu</property>
+            <property name="use_popover">False</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="icon_name">open-menu-symbolic</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
     </child>
   </object>
   <object class="GtkDialog" id="MessageDialog">
