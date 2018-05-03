@@ -102,3 +102,6 @@ ENV/
 
 # Files/folders related to code editors and IDEs
 .vscode
+
+# Config file
+config.json
