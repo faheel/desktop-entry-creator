@@ -9,7 +9,7 @@ with open('README.md', encoding='utf-8') as f:
 
 setup(
     name='desktop-entry-creator',
-    version='0.1.3',
+    version='0.1.4',
     description='A user-friendly GUI for creating desktop entries for '
                 'installed applications on Linux.',
     long_description=long_description,
