@@ -32,6 +32,10 @@ A user-friendly GUI for creating desktop entries for installed applications on L
 ## Development
 
 1. Install the required system packages mentioned in the installation section.
+   * Also install pipenv
+     ```bash
+     sudo apt install pipenv
+     ``` 
 2. Set up a Python 3 virtual environment using [Pipenv][pipenv]:
    ```bash
    pipenv --three
