@@ -123,18 +123,6 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="halign">start</property>
-                <property name="label" translatable="yes">Location</property>
-              </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">3</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkFileChooserButton" id="Icon">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -148,6 +136,18 @@
               </packing>
             </child>
             <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="halign">start</property>
+                <property name="label" translatable="yes">Location</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">3</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkFileChooserButton" id="Location">
                 <property name="name">Location</property>
                 <property name="visible">True</property>
@@ -158,6 +158,7 @@
                 <property name="local-only">False</property>
                 <property name="show-hidden">True</property>
                 <property name="title" translatable="yes">Select locaton to save file</property>
+                <signal name="file-set" handler="on_location_selected" swapped="no"/>
               </object>
               <packing>
                 <property name="left-attach">1</property>

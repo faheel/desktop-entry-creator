@@ -67,6 +67,8 @@ class App:
         self.message_dialog_label = self.builder.get_object('MessageDialogLabel')
         self.message_dialog_image = self.builder.get_object('MessageDialogImage')
 
+        self.builder.get_object('Location').set_current_folder(self.config['desktop_entry_directory'])
+
         if self.config['use_dark_theme']:
             self.builder.get_object('DarkThemeCheckbox').set_active(True)
         self.init_complete = True
@@ -105,8 +107,15 @@ class App:
 
     def save_config(self):
         with io.open(CONFIG_FILE, 'w+', encoding='utf8') as file:
-            file.write(json.dumps(self.config, ensure_ascii=False, sort_keys=True,
-                                  indent=4, separators=(',', ': ')))
+            file.write(
+                json.dumps(
+                    self.config,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    indent=4,
+                    separators=(',', ': ')
+                )
+            )
 
 
     def read_config(self):
@@ -126,6 +135,11 @@ class App:
 
     def on_icon_selected(self, file_dialog):
         self.entries['Icon'].value = file_dialog.get_filename()
+    
+
+    def on_location_selected(self, file_dialog):
+        self.location = file_dialog.get_filename()
+        return
 
 
     def filled_required_entries(self):
@@ -168,23 +182,30 @@ class App:
     def on_click_save(self, button):
         if (self.filled_required_entries()):
             name_slug = slugify(self.entries['Name'].value)
-            desktop_entry_path = '{}/{}.desktop'.format(
-                self.config['desktop_entry_directory'], name_slug)
+
+            self.config['desktop_entry_directory'] = self.location
+
+            desktop_entry_path = '{}/{}.desktop'.format(self.config['desktop_entry_directory'], name_slug)
+
             try:
                 with open(desktop_entry_path, 'w+') as desktop_entry_file:
                     desktop_entry_file.write('[Desktop Entry]\n')
+
                     for entry in self.entries.values():
-                        if entry.is_required or self.use_optional_entries \
-                                and not is_blank_string(entry.value):
+                        if entry.is_required or self.use_optional_entries and not is_blank_string(entry.value):
                             desktop_entry_file.write(entry.key + '=' + entry.value + '\n')
-                self.show_message_dialog(dialog_type='Success',
-                    text='Desktop entry\n{}\ncreated successfully.'.format(desktop_entry_path))
+
+                self.show_message_dialog(
+                    dialog_type='Success', 
+                    text='Desktop entry\n{}\ncreated successfully.'.format(desktop_entry_path)
+                )
             except Exception as e:
-                self.show_message_dialog(dialog_type='Error',
-                    text=str(e))
+                self.show_message_dialog(dialog_type='Error', text=str(e))
         else:
-            self.show_message_dialog(dialog_type='Alert',
-                text='Fill all required entries before saving.')
+            self.show_message_dialog(
+                dialog_type='Alert',
+                text='Fill all required entries before saving.'
+            )
 
 
 def main():
