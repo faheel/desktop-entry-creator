@@ -45,6 +45,7 @@ class App:
         'GenericName': Entry('GenericName', is_required=False),
         'Categories': Entry('Categories', is_required=False),
         'Keywords': Entry('Keywords', is_required=False),
+        'Terminal': Entry('Terminal', is_required=False)
     }
     config = {}
     use_optional_entries = False
@@ -69,6 +70,8 @@ class App:
         
         self.builder.get_object('Location').set_current_folder(self.config['desktop_entry_directory'])
         self.location = self.config['desktop_entry_directory']
+
+        self.builder.get_object('Terminal False').set_active(True)
 
         if self.config['use_dark_theme']:
             self.builder.get_object('DarkThemeCheckbox').set_active(True)
@@ -142,6 +145,13 @@ class App:
         self.location = file_dialog.get_filename()
         return
 
+    def on_terminal_true_toggled(self, radio_button):
+        self.entries['Terminal'].value = radio_button.get_label()
+        return
+
+    def on_terminal_false_toggled(self, radio_button):
+        self.entries['Terminal'].value = radio_button.get_label()
+        return
 
     def filled_required_entries(self):
         for entry in self.entries.values():
