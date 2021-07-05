@@ -321,14 +321,14 @@
                     <property name="can-focus">False</property>
                     <property name="tooltip-text">Whether the program runs in a terminal window</property>
                     <child>
-                      <object class="GtkRadioButton" id="Terminal True">
+                      <object class="GtkRadioButton" id="TerminalTrue">
                         <property name="label" translatable="yes">True</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>
                         <property name="margin-end">20</property>
                         <property name="draw-indicator">True</property>
-                        <property name="group">Terminal False</property>
+                        <property name="group">TerminalFalse</property>
                         <signal name="toggled" handler="on_terminal_true_toggled" swapped="no"/>
                       </object>
                       <packing>
@@ -337,7 +337,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkRadioButton" id="Terminal False">
+                      <object class="GtkRadioButton" id="TerminalFalse">
                         <property name="label" translatable="yes">False</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
@@ -346,7 +346,7 @@
                         <property name="margin-start">20</property>
                         <property name="margin-end">20</property>
                         <property name="draw-indicator">True</property>
-                        <property name="group">Terminal True</property>
+                        <property name="group">TerminalTrue</property>
                         <signal name="toggled" handler="on_terminal_false_toggled" swapped="no"/>
                       </object>
                       <packing>

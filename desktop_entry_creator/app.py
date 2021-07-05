@@ -18,6 +18,7 @@ DEFAULT_DESKTOP_ENTRY_DIR = expanduser('~/.local/share/applications')
 def absolute_path(relative_path):
     return abspath(dirname(__file__)) + '/' + relative_path
 
+
 UI_GLADE_FILE = absolute_path('res/ui.glade')
 CONFIG_FILE = absolute_path('config.json')
 
@@ -71,7 +72,7 @@ class App:
         self.builder.get_object('Location').set_current_folder(self.config['desktop_entry_directory'])
         self.location = self.config['desktop_entry_directory']
 
-        self.builder.get_object('Terminal False').set_active(True)
+        self.builder.get_object('TerminalFalse').set_active(True)
 
         if self.config['use_dark_theme']:
             self.builder.get_object('DarkThemeCheckbox').set_active(True)
@@ -145,13 +146,16 @@ class App:
         self.location = file_dialog.get_filename()
         return
 
+
     def on_terminal_true_toggled(self, radio_button):
         self.entries['Terminal'].value = radio_button.get_label()
         return
 
+
     def on_terminal_false_toggled(self, radio_button):
         self.entries['Terminal'].value = radio_button.get_label()
         return
+
 
     def filled_required_entries(self):
         for entry in self.entries.values():
