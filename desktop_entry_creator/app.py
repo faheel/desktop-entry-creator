@@ -68,6 +68,7 @@ class App:
         self.message_dialog_image = self.builder.get_object('MessageDialogImage')
 
         self.builder.get_object('Location').set_current_folder(self.config['desktop_entry_directory'])
+        self.location = self.config['desktop_entry_directory']
 
         if self.config['use_dark_theme']:
             self.builder.get_object('DarkThemeCheckbox').set_active(True)
