@@ -22,10 +22,10 @@ UI_GLADE_FILE = absolute_path('res/ui.glade')
 CONFIG_FILE = absolute_path('config.json')
 
 
-def is_blank_string(string):
-    if string == '' or string.isspace():
-        return True
-    return False
+# def is_blank_string(string):
+#     if string == '' or string.isspace():
+#         return True
+#     return False
 
 
 class Entry:
@@ -66,7 +66,7 @@ class App:
         self.message_dialog = self.builder.get_object('MessageDialog')
         self.message_dialog_label = self.builder.get_object('MessageDialogLabel')
         self.message_dialog_image = self.builder.get_object('MessageDialogImage')
-
+        
         self.builder.get_object('Location').set_current_folder(self.config['desktop_entry_directory'])
         self.location = self.config['desktop_entry_directory']
 
@@ -131,7 +131,7 @@ class App:
 
 
     def on_text_changed(self, text_entry):
-        self.entries[text_entry.get_name()].value = text_entry.get_text()
+        self.entries[text_entry.get_name()].value = text_entry.get_text().strip()
 
 
     def on_icon_selected(self, file_dialog):
@@ -145,7 +145,7 @@ class App:
 
     def filled_required_entries(self):
         for entry in self.entries.values():
-            if entry.is_required and is_blank_string(entry.value):
+            if entry.is_required and entry.value == "": # stripping is handled in text change
                 return False
 
         return True
@@ -193,7 +193,7 @@ class App:
                     desktop_entry_file.write('[Desktop Entry]\n')
 
                     for entry in self.entries.values():
-                        if entry.is_required or self.use_optional_entries and not is_blank_string(entry.value):
+                        if entry.is_required or self.use_optional_entries:
                             desktop_entry_file.write(entry.key + '=' + entry.value + '\n')
 
                 self.show_message_dialog(
