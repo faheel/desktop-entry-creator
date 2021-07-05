@@ -124,6 +124,7 @@
             </child>
             <child>
               <object class="GtkFileChooserButton" id="Icon">
+                <property name="name">Icon</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Application icon to be displayed in menus and file manager</property>
@@ -229,7 +230,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="halign">start</property>
-                    <property name="label" translatable="yes">Generic name</property>
+                    <property name="label" translatable="yes">Generic Name</property>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
@@ -382,7 +383,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="margin-start">4</property>
-                <property name="label" translatable="yes">Optional entries</property>
+                <property name="label" translatable="yes">Optional Entries</property>
               </object>
             </child>
           </object>

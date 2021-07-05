@@ -86,6 +86,33 @@ class App:
         Gtk.main_quit()
 
 
+    def reset_fields(self):
+        for obj in self.builder.get_objects():
+            
+            if type(obj) == Gtk.Entry:
+                obj.set_text("")
+            
+            if type(obj) == Gtk.Expander:
+               obj.set_expanded(False)
+
+            if type(obj) == Gtk.FileChooserButton and obj.get_name().lower() == "icon":
+                obj.set_filename("")
+        
+        self.entries = {
+            'Name': Entry('Name'),
+            'Exec': Entry('Exec'),
+            'Icon': Entry('Icon'),
+            'Type': Entry('Type', 'Application'),
+            'Comment': Entry('Comment', is_required=False),
+            'GenericName': Entry('GenericName', is_required=False),
+            'Categories': Entry('Categories', is_required=False),
+            'Keywords': Entry('Keywords', is_required=False),
+            'Terminal': Entry('Terminal', is_required=False)
+        }
+        self.toggle_optional_entries(self)
+        self.builder.get_object('TerminalFalse').set_active(True)
+         
+
     def create_self_desktop_entry(self, _):
         icon = absolute_path('res/icon.png')
         command = abspath(__file__)
@@ -99,7 +126,7 @@ class App:
         ''').strip().format(icon, command)
 
         desktop_entry_path = '{}/desktop-entry-creator.desktop'.format(
-            self.config['desktop_entry_directory'])
+            DEFAULT_DESKTOP_ENTRY_DIR)
         try:
             with open(desktop_entry_path, 'w+') as desktop_entry_file:
                 desktop_entry_file.write(desktop_entry)
@@ -144,17 +171,17 @@ class App:
 
     def on_location_selected(self, file_dialog):
         self.location = file_dialog.get_filename()
-        return
+
 
 
     def on_terminal_true_toggled(self, radio_button):
         self.entries['Terminal'].value = radio_button.get_label()
-        return
+
 
 
     def on_terminal_false_toggled(self, radio_button):
         self.entries['Terminal'].value = radio_button.get_label()
-        return
+
 
 
     def filled_required_entries(self):
@@ -207,13 +234,15 @@ class App:
                     desktop_entry_file.write('[Desktop Entry]\n')
 
                     for entry in self.entries.values():
-                        if entry.is_required or self.use_optional_entries:
+                        if (entry.is_required or self.use_optional_entries) and entry.value != "":
                             desktop_entry_file.write(entry.key + '=' + entry.value + '\n')
 
                 self.show_message_dialog(
                     dialog_type='Success', 
                     text='Desktop entry\n{}\ncreated successfully.'.format(desktop_entry_path)
                 )
+
+                self.reset_fields()
             except Exception as e:
                 self.show_message_dialog(dialog_type='Error', text=str(e))
         else:
