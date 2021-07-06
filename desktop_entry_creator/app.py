@@ -18,14 +18,15 @@ DEFAULT_DESKTOP_ENTRY_DIR = expanduser('~/.local/share/applications')
 def absolute_path(relative_path):
     return abspath(dirname(__file__)) + '/' + relative_path
 
+
 UI_GLADE_FILE = absolute_path('res/ui.glade')
 CONFIG_FILE = absolute_path('config.json')
 
 
-def is_blank_string(string):
-    if string == '' or string.isspace():
-        return True
-    return False
+# def is_blank_string(string):
+#     if string == '' or string.isspace():
+#         return True
+#     return False
 
 
 class Entry:
@@ -45,6 +46,7 @@ class App:
         'GenericName': Entry('GenericName', is_required=False),
         'Categories': Entry('Categories', is_required=False),
         'Keywords': Entry('Keywords', is_required=False),
+        'Terminal': Entry('Terminal', is_required=False)
     }
     config = {}
     use_optional_entries = False
@@ -66,6 +68,11 @@ class App:
         self.message_dialog = self.builder.get_object('MessageDialog')
         self.message_dialog_label = self.builder.get_object('MessageDialogLabel')
         self.message_dialog_image = self.builder.get_object('MessageDialogImage')
+        
+        self.builder.get_object('Location').set_current_folder(self.config['desktop_entry_directory'])
+        self.location = self.config['desktop_entry_directory']
+
+        self.builder.get_object('TerminalFalse').set_active(True)
 
         if self.config['use_dark_theme']:
             self.builder.get_object('DarkThemeCheckbox').set_active(True)
@@ -78,6 +85,33 @@ class App:
         self.save_config()
         Gtk.main_quit()
 
+
+    def reset_fields(self):
+        for obj in self.builder.get_objects():
+            
+            if type(obj) == Gtk.Entry:
+                obj.set_text("")
+            
+            if type(obj) == Gtk.Expander:
+               obj.set_expanded(False)
+
+            if type(obj) == Gtk.FileChooserButton and obj.get_name().lower() == "icon":
+                obj.set_filename("")
+        
+        self.entries = {
+            'Name': Entry('Name'),
+            'Exec': Entry('Exec'),
+            'Icon': Entry('Icon'),
+            'Type': Entry('Type', 'Application'),
+            'Comment': Entry('Comment', is_required=False),
+            'GenericName': Entry('GenericName', is_required=False),
+            'Categories': Entry('Categories', is_required=False),
+            'Keywords': Entry('Keywords', is_required=False),
+            'Terminal': Entry('Terminal', is_required=False)
+        }
+        self.toggle_optional_entries(self)
+        self.builder.get_object('TerminalFalse').set_active(True)
+         
 
     def create_self_desktop_entry(self, _):
         icon = absolute_path('res/icon.png')
@@ -92,7 +126,7 @@ class App:
         ''').strip().format(icon, command)
 
         desktop_entry_path = '{}/desktop-entry-creator.desktop'.format(
-            self.config['desktop_entry_directory'])
+            DEFAULT_DESKTOP_ENTRY_DIR)
         try:
             with open(desktop_entry_path, 'w+') as desktop_entry_file:
                 desktop_entry_file.write(desktop_entry)
@@ -105,8 +139,15 @@ class App:
 
     def save_config(self):
         with io.open(CONFIG_FILE, 'w+', encoding='utf8') as file:
-            file.write(json.dumps(self.config, ensure_ascii=False, sort_keys=True,
-                                  indent=4, separators=(',', ': ')))
+            file.write(
+                json.dumps(
+                    self.config,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    indent=4,
+                    separators=(',', ': ')
+                )
+            )
 
 
     def read_config(self):
@@ -121,16 +162,31 @@ class App:
 
 
     def on_text_changed(self, text_entry):
-        self.entries[text_entry.get_name()].value = text_entry.get_text()
+        self.entries[text_entry.get_name()].value = text_entry.get_text().strip()
 
 
     def on_icon_selected(self, file_dialog):
         self.entries['Icon'].value = file_dialog.get_filename()
+    
+
+    def on_location_selected(self, file_dialog):
+        self.location = file_dialog.get_filename()
+
+
+
+    def on_terminal_true_toggled(self, radio_button):
+        self.entries['Terminal'].value = radio_button.get_label()
+
+
+
+    def on_terminal_false_toggled(self, radio_button):
+        self.entries['Terminal'].value = radio_button.get_label()
+
 
 
     def filled_required_entries(self):
         for entry in self.entries.values():
-            if entry.is_required and is_blank_string(entry.value):
+            if entry.is_required and entry.value == "": # stripping is handled in text change
                 return False
 
         return True
@@ -168,23 +224,32 @@ class App:
     def on_click_save(self, button):
         if (self.filled_required_entries()):
             name_slug = slugify(self.entries['Name'].value)
-            desktop_entry_path = '{}/{}.desktop'.format(
-                self.config['desktop_entry_directory'], name_slug)
+
+            self.config['desktop_entry_directory'] = self.location
+
+            desktop_entry_path = '{}/{}.desktop'.format(self.config['desktop_entry_directory'], name_slug)
+
             try:
                 with open(desktop_entry_path, 'w+') as desktop_entry_file:
                     desktop_entry_file.write('[Desktop Entry]\n')
+
                     for entry in self.entries.values():
-                        if entry.is_required or self.use_optional_entries \
-                                and not is_blank_string(entry.value):
+                        if (entry.is_required or self.use_optional_entries) and entry.value != "":
                             desktop_entry_file.write(entry.key + '=' + entry.value + '\n')
-                self.show_message_dialog(dialog_type='Success',
-                    text='Desktop entry\n{}\ncreated successfully.'.format(desktop_entry_path))
+
+                self.show_message_dialog(
+                    dialog_type='Success', 
+                    text='Desktop entry\n{}\ncreated successfully.'.format(desktop_entry_path)
+                )
+
+                self.reset_fields()
             except Exception as e:
-                self.show_message_dialog(dialog_type='Error',
-                    text=str(e))
+                self.show_message_dialog(dialog_type='Error', text=str(e))
         else:
-            self.show_message_dialog(dialog_type='Alert',
-                text='Fill all required entries before saving.')
+            self.show_message_dialog(
+                dialog_type='Alert',
+                text='Fill all required entries before saving.'
+            )
 
 
 def main():
